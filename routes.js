@@ -31,9 +31,9 @@ router.patch('/accessories/:id',async (req,res)=>{
          {
             imovie.name = req.body.name
          }
-        if (req.body.gender) 
+        if (req.body.price) 
         {
-            imovie.gender = req.body.gender
+            imovie.price = req.body.price
         }
         await imovie.save()
         res.send(imovie)
