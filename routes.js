@@ -21,7 +21,7 @@ router.post("/accessories", async (req, res) => {
 
 
 
-router.patch('/usermodels/:id',async (req,res)=>{
+router.patch('/accessories/:id',async (req,res)=>{
     console.log(req.params.id)
     try
     {
@@ -45,7 +45,7 @@ router.patch('/usermodels/:id',async (req,res)=>{
 })
 
 
-router.delete("/usermodels/:name", async (req, res) => {
+router.delete("/accessories/:name", async (req, res) => {
     try {
         await userModel.deleteOne({name: req.params.name })
         
