@@ -1,13 +1,8 @@
 {
-  "name": "rpapidemo",
+  "name": "tutorial-4",
   "version": "1.0.0",
+  "description": "",
   "main": "index.js",
-  "dependencies": {
-    "body-parser": "^1.19.1",
-    "express": "^4.17.2",
-    "mongoose": "^6.2.0",
-    "nodemon": "^2.0.15"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index"
@@ -15,5 +10,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "dependencies": {
+    "body-parser": "^1.19.1",
+    "express": "^4.17.2",
+    "mongoose": "^6.2.0"
+  }
 }
