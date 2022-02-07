@@ -1,22 +1,23 @@
-const express=require("express")
-const mongoose=require("mongoose")
-const routes=require("./routes")
-var bodyParser =require('body-parser')
+var mongoose = require("mongoose")
+var express = require("express")
+var route = require('./routes')
+var bodyParser = require('body-parser')
+var app = express()
 
+mongoose.connect("mongodb+srv://Bvasani729:B1234567@cluster0.wluvm.mongodb.net/SPElectronics?retryWrites=true&w=majority").then(() => {
 
-//ApiDemo is an database name
+    console.log("Router Connected...!!")
 
+    app.use(bodyParser.urlencoded({ extended: false }))
+    app.use('/api', route)
 
-mongoose.connect('mongodb+srv://Bvasani729:B1234567@cluster0.wluvm.mongodb.net/SPElectronics?retryWrites=true&w=majority').then(()=>{
-
-    var app=express()
-    app.use(bodyParser.urlencoded({extended:false}))
-    app.use("/api",routes);
-    app.use(express.json()) // new
-    app.listen(process.env.PORT||3000,()=>
-    {
-        console.log("Server created")
+    app.get('/', (req, res) => {
+        res.sendFile('index.html', { root: __dirname })
     })
-}).catch((e)=>{
+
+    app.listen((process.env.PORT || 3000), () => {
+        console.log('Server Started Successfully...!!')
+    })
+}).catch((e) => {
     console.log(e.toString())
 })

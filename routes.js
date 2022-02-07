@@ -1,65 +1,69 @@
-//Work of routes js is to get the data from the database with the help of userModel
-//await is used for when all th edata from database is come the got to next line
-const express=require("express");
-const userModel = require("./model/userModel");
-const router=express.Router();
+var express = require('express');
+var router = express.Router();
+var Accessorie = require('./Models/Accessorie')
 
-
-router.get("/accessories",async(req,res)=>{
-    const data=await userModel.find()
-    res.send(data)
+//to fetch data from the SPElectronics data base in accessories table
+router.get('/accessories', async (req, res) => {
+    const accessorie = await Accessorie.find()
+    res.send(accessorie)
 })
+
+//to insert data to the SPElectronics data base in accessories table
 router.post("/accessories", async (req, res) => {
-    const post = new userModel({
-        name:   req.body.name, // take data from postman
-        price:  req.body.price,
+    const accessorie = new Accessorie({
+        name: req.body.name,
+        price: req.body.price
     })
-    await post.save()
-    res.send(post)
-})
 
-
-
-
-router.patch('/accessories/:id',async (req,res)=>{
-    console.log(req.params.id)
-    try
-    {
-        const imovie = await userModel.findOne({_id:req.params.id})
-        console.log(imovie)
-        if (req.body.name)
-         {
-            imovie.name = req.body.name
-         }
-        if (req.body.price) 
-        {
-            imovie.price = req.body.price
+    await accessorie.save((err, msg) => {
+        if (err) {
+            res.status(500).json({
+                "error": err
+            })
         }
-        await imovie.save()
-        res.send(imovie)
-    }
-    catch
-    {
-        res.send({ error: "Post doesn't exist!" })
-    }
+        else {
+            res.status(200).json({
+                "My-message": msg
+            })
+        }
+    })
 })
 
-
-router.delete("/accessories/:name", async (req, res) => {
-    try {
-        await userModel.deleteOne({name: req.params.name })
-        
-        res.send("Delete Successfully")
-
-    } 
-    catch {
-
-        res.status(404)
-
-        res.send({ error: "Post doesn't exist!" })
-
-    }
-
+// to update data for the SPElectronics data base in accessories table
+router.patch('/accessories/:id',async (req,res)=>{
+    const accessorie = await Accessorie.findOne({_id:req.params.id})
+    accessorie.name = req.body.name
+    accessorie.price = req.body.price
+    await accessorie.save((err,msg)=>{
+        if(err){
+            res.status(500).json({
+                error:err
+            })
+        }
+        else{
+            res.status(200).json({
+                msg:msg
+            })
+        }
+    })
 })
-module.exports=router
 
+//to delete data for the SPElectronics data base in accessories table
+router.delete("/accessories/:name",async(req,res)=>{
+    await Accessorie.deleteOne({name:req.params.name},(err,msg)=>{
+        if(err){
+            res.status(500).json({
+                error:err
+            })
+        }
+        else{
+            res.status(200).json({
+                msg:msg
+            })
+        }
+    })
+    const accessorie = await Accessorie.find()
+            res.send(accessorie)
+})
+
+module.exports = router;
